@@ -88,8 +88,9 @@ def confirm_roi(video_file: str, roi: Sequence[int]) -> bool:
     window_name = "ROI"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     min_width = 400
+    automatic_min_height = 80
     display_width = max(w, min_width)
-    display_height = h + 80
+    display_height = h + automatic_min_height
     cv2.resizeWindow(window_name, display_width, display_height)
     cv2.moveWindow(window_name, 100, 100)
     cv2.createTrackbar("Frame", window_name, 0, int(cap.get(cv2.CAP_PROP_FRAME_COUNT)), lambda x: None)
@@ -105,6 +106,10 @@ def confirm_roi(video_file: str, roi: Sequence[int]) -> bool:
             pad_left = (min_width - w) // 2
             pad_right = min_width - w - pad_left
             frame = cv2.copyMakeBorder(frame, 0, 0, pad_left, pad_right, cv2.BORDER_CONSTANT, value=[0,0,0])
+        if h < automatic_min_height:
+            pad_top = (automatic_min_height - h) // 2
+            pad_bottom = automatic_min_height - h - pad_top
+            frame = cv2.copyMakeBorder(frame, pad_top, pad_bottom, 0, 0, cv2.BORDER_CONSTANT, value=[0,0,0])
         cv2.imshow(window_name, frame)
         key = cv2.waitKey(1)
         if key == ord("q"):
