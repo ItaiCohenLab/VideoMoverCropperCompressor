@@ -1,17 +1,27 @@
 # VideoMoverCropperCompressor
-Program that moves all files and videos from one location to another, while providing an interface to crop. Upon cropping, videos are cropped, losslessly compressed and then moved to the target folder.
+This program moves all files and videos from one location to another, providing an interface to crop videos. Cropped videos are losslessly compressed and saved to the target folder. Non-video files are also copied, preserving the folder structure.
 
-requirements:
-opencv (if using anaconda, you need to install via pip, the anaconda package does not work)
-numpy
-ctypes
-shutil
-subprocess
+## Features
+- Interactive cropping GUI for each video
+- Confirmation window with seekbar to verify crop
+- Currently supports .avi input files
+- Output formats: MKV (FFV1), MP4 (H.264), AVI (libx264)
+- Lossless compression using FFmpeg
+- Preserves original folder structure and non-video files
 
-Currently works for .avi files.
+## Requirements
+- opencv-python (Install via pip. Conda library does not have correct codecs.)
+- FFmpeg (Must be installed and available in your system PATH)
+
+# Usage
 
 Modify the variables experiment_folder, upper_folder, and output_upper_folder to change the behaviour.
-![image](https://github.com/user-attachments/assets/34923a3e-f78e-435a-868a-13da216ff121)
+```python
+main_folder = "E:\\Raw_Data\\2025-07-15-Durability-60nmDesc-1-1"
+output_folder = "Z:\\Data\\2025-07-15-Durability-60nmDesc-1-1"
+format = "mp4"  # or "ffv1", "libx264_avi"
+move_and_crop(main_folder, output_folder, format)
+```
 
 Run and the cropping GUI will appear. It will run for all videos in the folder.
 ![image](https://github.com/user-attachments/assets/94516454-8637-4c26-b08d-f6cea9268a7e)
